@@ -2,6 +2,7 @@ import os
 import uuid
 import yt_dlp
 import asyncio
+import imageio_ffmpeg
 
 from fastapi import FastAPI
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -61,8 +62,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text("Select the song to download:", reply_markup=reply_markup)
 
-# Download audio as MP3 from YouTube URL
+# Download audio as MP3 from YouTube URL using imageio-ffmpeg
 async def download_audio(url):
+    # Set ffmpeg path for yt_dlp to use imageio-ffmpeg's bundled binary
+    os.environ["FFMPEG_BINARY"] = imageio_ffmpeg.get_ffmpeg_exe()
+
     filename = os.path.join(DOWNLOAD_DIR, f"{uuid.uuid4()}.mp3")
     ydl_opts = {
         'format': 'bestaudio',
