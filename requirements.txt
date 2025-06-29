@@ -1,4 +1,4 @@
-python-telegram-bot==20.8
-fastapi==0.111.0
-uvicorn==0.29.0
-yt-dlp==2024.05.27
+yt-dlp
+imageio-ffmpeg
+fastapi
+python-telegram-bot
